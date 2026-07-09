@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Game Sales Prediction</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-image: url('https://media.idownloadblog.com/wp-content/uploads/2014/01/nintendo-2.jpg');
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
+
+        .container{
+            width:400px;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            text-align:center;
+            color:#333;
+        }
+
+        label{
+            font-weight:bold;
+        }
+
+        input,select{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:15px;
+            border-radius:5px;
+            border:1px solid #ccc;
+        }
+
+        input[type="submit"]{
+            background:green;
+            color:white;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        input[type="submit"]:hover{
+            background:darkgreen;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Video Game Sales Prediction</h2>
+
+<form action="/predict" method="POST">
+
+    <label>Platform</label>
+
+    <select name="platform" required>
+        <option value="">Select Platform</option>
+        <option>PS4</option>
+        <option>Wii</option>
+        <option>PC</option>
+        <option>PS2</option>
+        <option>X360</option>
+        <option>PS3</option>
+        <option>DS</option>
+        <option>PS</option>
+        <option>GBA</option>
+        <option>PSP</option>
+        <option>PS4</option>
+    </select>
+
+    <label>Release Year</label>
+
+    <input
+        type="number"
+        name="year"
+        placeholder="Enter Release Year"
+        required>
+
+    <label>Genre</label>
+
+    <select name="genre" required>
+        <option value="">Select Genre</option>
+        <option>Action</option>
+        <option>Sports</option>
+        <option>Racing</option>
+    </select>
+
+    <label>Publisher</label>
+
+    <input
+        type="text"
+        name="publisher"
+        placeholder="Enter Publisher Name"
+        required>
+
+    <input type="submit" value="Predict Sales">
+
+</form>
+
+</div>
+
+    
+</body>
+</html>
