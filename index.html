@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Game Sales Predictor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 16px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #20243a;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .card {
+            padding: 30px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.07);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            background: #fff;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid #818cf8;
+            border-color: #6366f1;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            background: #4f46e5;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #4338ca;
+        }
+
+        .error {
+            margin-bottom: 22px;
+            padding: 14px;
+            color: #991b1b;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 9px;
+            line-height: 1.5;
+        }
+
+        .links {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .links a {
+            margin: 0 10px;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 560px) {
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <h1>Video Game Sales Predictor</h1>
+            <p>
+                Predict estimated global video game sales using
+                machine learning.
+            </p>
+        </header>
+
+        <section class="card">
+
+            {% if error %}
+                <div class="error" role="alert">
+                    <strong>Unable to predict:</strong>
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form action="{{ url_for('predict') }}" method="POST">
+
+                <div class="grid">
+                    <div class="field">
+                        <label for="platform">Platform</label>
+                        <select id="platform" name="platform" required>
+                            <option value="">Select platform</option>
+                            {% for item in platforms %}
+                                <option value="{{ item }}"
+                                    {% if request.form.get('platform') == item|string %}selected{% endif %}>
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="year">Release Year</label>
+                        <input
+                            type="number"
+                            id="year"
+                            name="year"
+                            min="1970"
+                            max="2035"
+                            step="1"
+                            placeholder="e.g. 2015"
+                            value="{{ request.form.get('year', '') }}"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="field">
+                        <label for="genre">Genre</label>
+                        <select id="genre" name="genre" required>
+                            <option value="">Select genre</option>
+                            {% for item in genres %}
+                                <option value="{{ item }}"
+                                    {% if request.form.get('genre') == item|string %}selected{% endif %}>
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="publisher">Publisher</label>
+                        <select id="publisher" name="publisher" required>
+                            <option value="">Select publisher</option>
+                            {% for item in publishers %}
+                                <option value="{{ item }}"
+                                    {% if request.form.get('publisher') == item|string %}selected{% endif %}>
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button class="button" type="submit">
+                    Predict Global Sales
+                </button>
+            </form>
+
+            <nav class="links">
+                <a href="{{ url_for('dashboard') }}">View Model Dashboard</a>
+            </nav>
+        </section>
+
+        <footer class="footer">
+            Machine Learning Project · Video Game Sales Analysis
+        </footer>
+    </main>
+</body>
+</html>

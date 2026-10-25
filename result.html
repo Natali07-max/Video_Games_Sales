@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result | Video Game Sales</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 16px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            color: #20243a;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 600px;
+            padding: 35px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+            text-align: center;
+        }
+
+        .eyebrow {
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .prediction {
+            margin: 28px 0;
+            padding: 24px;
+            border-radius: 14px;
+            background: #eef2ff;
+        }
+
+        .number {
+            margin: 10px 0;
+            color: #4338ca;
+            font-size: 44px;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+        }
+
+        .unit {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .details {
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .details p {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            overflow-wrap: anywhere;
+        }
+
+        .details strong {
+            display: inline-block;
+            min-width: 125px;
+        }
+
+        .button {
+            display: block;
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 9px;
+            color: white;
+            background: #4f46e5;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .button:hover {
+            background: #4338ca;
+        }
+
+        .secondary {
+            color: #4f46e5;
+            background: #eef2ff;
+        }
+
+        .secondary:hover {
+            background: #e0e7ff;
+        }
+
+        .note {
+            margin-top: 22px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <div class="eyebrow">Prediction complete</div>
+
+        <h1>Estimated Game Sales</h1>
+
+        <p class="description">
+            Your trained machine-learning model has generated a prediction
+            for the selected game attributes.
+        </p>
+
+        <section class="prediction">
+            <div class="unit">Predicted Global Sales</div>
+            <div class="number">{{ "%.2f"|format(prediction) }}</div>
+            <div class="unit">Million units, if the model was trained in millions</div>
+        </section>
+
+        <section class="details">
+            <h3>Input Summary</h3>
+
+            <p><strong>Platform:</strong> {{ platform }}</p>
+            <p><strong>Release Year:</strong> {{ year }}</p>
+            <p><strong>Genre:</strong> {{ genre }}</p>
+            <p><strong>Publisher:</strong> {{ publisher }}</p>
+        </section>
+
+        <a class="button" href="{{ url_for('home') }}">
+            Make Another Prediction
+        </a>
+
+        <a class="button secondary" href="{{ url_for('dashboard') }}">
+            View Model Dashboard
+        </a>
+
+        <p class="note">
+            This is a model-generated estimate, not a guarantee of actual sales.
+            Results depend on the quality and coverage of the training data.
+        </p>
+    </main>
+</body>
+</html>
